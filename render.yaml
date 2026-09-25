@@ -1,0 +1,28 @@
+# Render Blueprint: https://render.com/docs/blueprint-spec
+services:
+  - type: web
+    name: forms-mcp
+    runtime: python
+    plan: free
+    region: singapore
+    buildCommand: pip install uv && uv sync --frozen --no-dev
+    startCommand: .venv/bin/python -m forms_mcp.app
+    healthCheckPath: /healthz
+    autoDeploy: true
+    envVars:
+      # uv が Render の Python 3.12 を使うようにする（uv 管理の Python をダウンロードさせない）
+      - key: PYTHON_VERSION
+        value: 3.12.11
+      - key: UV_PYTHON_PREFERENCE
+        value: only-system
+      # 以下はシークレット。値はダッシュボードで入力する（sync: false）
+      - key: MCP_PATH_SECRET
+        sync: false
+      - key: GOOGLE_CLIENT_ID
+        sync: false
+      - key: GOOGLE_CLIENT_SECRET
+        sync: false
+      - key: GOOGLE_REFRESH_TOKEN
+        sync: false
+      - key: PUBSUB_TOPIC
+        sync: false

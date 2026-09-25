@@ -1,0 +1,30 @@
+[project]
+name = "forms-mcp"
+version = "0.1.0"
+description = "Remote MCP server for Google Forms API v1 (with Drive API helpers)"
+readme = "README.md"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "mcp>=2.2,<3",
+    "google-api-python-client>=2.150",
+    "google-auth>=2.35",
+    "starlette>=0.40",
+    "uvicorn>=0.30",
+    "anyio>=4",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8",
+    "google-auth-oauthlib>=1.2",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/forms_mcp"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
